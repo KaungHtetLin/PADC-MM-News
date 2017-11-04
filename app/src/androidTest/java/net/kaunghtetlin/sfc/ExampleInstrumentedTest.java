@@ -1,4 +1,4 @@
-package net.kaunghtetlin.padc_mm_news;
+package net.kaunghtetlin.sfc;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
