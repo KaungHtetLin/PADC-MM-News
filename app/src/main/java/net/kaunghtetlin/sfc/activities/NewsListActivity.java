@@ -1,5 +1,6 @@
 package net.kaunghtetlin.sfc.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,8 +14,9 @@ import android.view.MenuItem;
 
 import net.kaunghtetlin.sfc.R;
 import net.kaunghtetlin.sfc.adapters.NewsAdapter;
+import net.kaunghtetlin.sfc.delegates.NewsItemDelegate;
 
-public class NewsListActivity extends AppCompatActivity {
+public class NewsListActivity extends AppCompatActivity implements NewsItemDelegate{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,7 @@ public class NewsListActivity extends AppCompatActivity {
         RecyclerView rvNew = findViewById(R.id.rv_news);
         rvNew.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
 
-        NewsAdapter newsAdapter=new NewsAdapter(getApplicationContext());
+        NewsAdapter newsAdapter=new NewsAdapter(getApplicationContext(),this);
         rvNew.setAdapter(newsAdapter);
 
     }
@@ -60,5 +62,31 @@ public class NewsListActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onTapComment() {
+
+    }
+
+    @Override
+    public void onTapSendTo() {
+
+    }
+
+    @Override
+    public void onTapFavorite() {
+
+    }
+
+    @Override
+    public void onTapStatistics() {
+
+    }
+
+    @Override
+    public void onTapNews() {
+        Intent intent=NewsDetailsActivity.newIntent(getApplicationContext());
+        startActivity(intent);
     }
 }
