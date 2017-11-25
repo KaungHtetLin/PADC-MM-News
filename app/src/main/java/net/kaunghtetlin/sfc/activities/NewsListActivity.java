@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -99,6 +102,24 @@ public class NewsListActivity extends AppCompatActivity implements NewsItemDeleg
     @Override
     public void onTapNews() {
         Intent intent=NewsDetailsActivity.newIntent(getApplicationContext());
-        startActivity(intent);
+//        startActivity(intent);
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                // the context of the activity
+                this,
+
+                // For each shared element, add to this method a new Pair item,
+                // which contains the reference of the view we are transitioning *from*,
+                // and the value of the transitionName attribute
+                new Pair<View, String>(findViewById(R.id.iv_publication_logo),
+                        getString(R.string.transition_name_publication_image)),
+                new Pair<View, String>(findViewById(R.id.tv_publication_name),
+                        getString(R.string.transition_name_publication_name)),
+                new Pair<View, String>(findViewById(R.id.tv_published_date),
+                        getString(R.string.transition_name_posted_date)),
+                new Pair<View, String>(findViewById(R.id.iv_news_hero_image),
+                        getString(R.string.transition_name_hero_image))
+        );
+        ActivityCompat.startActivity(this, intent, options.toBundle());
     }
 }

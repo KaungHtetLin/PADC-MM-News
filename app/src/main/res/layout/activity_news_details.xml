@@ -22,7 +22,8 @@
                 android:id="@+id/vp_new_details_images"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fitsSystemWindows="true" />
+                android:fitsSystemWindows="true"
+                android:transitionName="@string/transition_name_hero_image" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -35,7 +36,8 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="@dimen/news_details_publication_logo_margin_botom"
                     android:layout_marginLeft="@dimen/margin_medium_2"
-                    android:src="@drawable/img_publication_logo_placeholder" />
+                    android:src="@drawable/img_publication_logo_placeholder"
+                    android:transitionName="@string/transition_name_publication_image" />
 
                 <TextView
                     android:id="@+id/tv_publication_name"
@@ -51,7 +53,8 @@
                     android:shadowRadius="1"
                     android:text="Eleven Media"
                     android:textColor="@color/white_full"
-                    android:textSize="@dimen/text_regular_3x" />
+                    android:textSize="@dimen/text_regular_3x"
+                    android:transitionName="@string/transition_name_publication_name" />
 
                 <TextView
                     android:id="@+id/tv_published_date"
@@ -66,7 +69,8 @@
                     android:shadowRadius="1"
                     android:text="Posted At : Jan 01 - 6:30AM"
                     android:textColor="@color/white_full"
-                    android:textSize="@dimen/text_regular_2x" />
+                    android:textSize="@dimen/text_regular_2x"
+                    android:transitionName="@string/transition_name_posted_date" />
 
             </RelativeLayout>
 
