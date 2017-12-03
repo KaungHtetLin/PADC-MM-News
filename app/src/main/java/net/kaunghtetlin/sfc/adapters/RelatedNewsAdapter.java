@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.kaunghtetlin.sfc.R;
+import net.kaunghtetlin.sfc.data.vo.RelatedNewsVO;
 import net.kaunghtetlin.sfc.delegates.NewsItemDelegate;
 import net.kaunghtetlin.sfc.viewholders.RelatedNewsViewHolder;
 
@@ -14,27 +15,20 @@ import net.kaunghtetlin.sfc.viewholders.RelatedNewsViewHolder;
  * Created by Kaung Htet Lin on 11/25/2017.
  */
 
-public class RelatedNewsAdapter extends RecyclerView.Adapter {
-
-    private LayoutInflater mLayoutInflator;
+public class RelatedNewsAdapter extends BaseRecyclerAdapter<RelatedNewsViewHolder,RelatedNewsVO> {
 
     public RelatedNewsAdapter(Context context) {
-        mLayoutInflator = LayoutInflater.from(context);
+        super(context);
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RelatedNewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View relatedNewsView = mLayoutInflator.inflate(R.layout.view_item_related_news, parent, false);
         return new RelatedNewsViewHolder(relatedNewsView);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RelatedNewsViewHolder holder, int position) {
 
-    }
-
-    @Override
-    public int getItemCount() {
-        return 6;
     }
 }

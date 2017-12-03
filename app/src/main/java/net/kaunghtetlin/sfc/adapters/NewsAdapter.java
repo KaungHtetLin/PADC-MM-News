@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.kaunghtetlin.sfc.R;
+import net.kaunghtetlin.sfc.data.vo.NewsVO;
 import net.kaunghtetlin.sfc.delegates.NewsItemDelegate;
 import net.kaunghtetlin.sfc.viewholders.NewsViewHolder;
 
@@ -14,19 +15,18 @@ import net.kaunghtetlin.sfc.viewholders.NewsViewHolder;
  * Created by Kaung Htet Lin on 11/4/2017.
  */
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
+public class NewsAdapter extends BaseRecyclerAdapter<NewsViewHolder,NewsVO> {
 
-    private LayoutInflater mlayoutInflater;
     private NewsItemDelegate mNewsItemDelegeate;
 
     public NewsAdapter(Context context, NewsItemDelegate newsItemDelegate) {
-        mlayoutInflater =LayoutInflater.from(context);
+        super(context);
         mNewsItemDelegeate=newsItemDelegate;
     }
 
     @Override
     public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View newsItemView=mlayoutInflater.inflate(R.layout.view_item_news,parent,false);
+        View newsItemView=mLayoutInflator.inflate(R.layout.view_item_news,parent,false);
         return new NewsViewHolder(newsItemView,mNewsItemDelegeate);
     }
 

@@ -1,26 +1,36 @@
 package net.kaunghtetlin.sfc.viewholders;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import net.kaunghtetlin.sfc.data.vo.NewsVO;
 import net.kaunghtetlin.sfc.delegates.NewsItemDelegate;
+import net.kaunghtetlin.sfc.events.NetworkEvent;
+import net.kaunghtetlin.sfc.events.TapNewsEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by Kaung Htet Lin on 11/4/2017.
  */
 
-public class NewsViewHolder extends RecyclerView.ViewHolder {
+public class NewsViewHolder extends BaseViewHolder<NewsVO> {
 
     private NewsItemDelegate mDelegate;
 
-    public NewsViewHolder(View itemView , NewsItemDelegate newsItemDelegate) {
+    public NewsViewHolder(View itemView, NewsItemDelegate newsItemDelegate) {
         super(itemView);
-        mDelegate=newsItemDelegate;
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mDelegate.onTapNews();
-            }
-        });
+        mDelegate = newsItemDelegate;
+    }
+
+    @Override
+    public void setData(NewsVO data) {
+
+    }
+
+    @Override
+    public void onClick(View view) {
+//        mDelegate.onTapNews();
+//        EventBus.getDefault().post(new TapNewsEvent("news-id"));
+        EventBus.getDefault().post(new NetworkEvent.Noresponse());
     }
 }

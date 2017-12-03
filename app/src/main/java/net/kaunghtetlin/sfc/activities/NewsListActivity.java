@@ -19,15 +19,30 @@ import android.view.MenuItem;
 
 import net.kaunghtetlin.sfc.R;
 import net.kaunghtetlin.sfc.adapters.NewsAdapter;
+import net.kaunghtetlin.sfc.components.SmartRecyclerView;
+import net.kaunghtetlin.sfc.components.SmartScrollListener;
 import net.kaunghtetlin.sfc.delegates.NewsItemDelegate;
+import net.kaunghtetlin.sfc.events.TapNewsEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NewsListActivity extends AppCompatActivity implements NewsItemDelegate{
+public class NewsListActivity extends BaseActivity implements NewsItemDelegate {
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
+
+    @BindView(R.id.rv_news)
+    SmartRecyclerView rvNews;
+
+    @BindView(R.id.vp_empty_news)
+    View vpEmptyNews;
+
+    SmartScrollListener mSmartScrollListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +51,7 @@ public class NewsListActivity extends AppCompatActivity implements NewsItemDeleg
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ButterKnife.bind(this,this);
+        ButterKnife.bind(this, this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -45,15 +60,26 @@ public class NewsListActivity extends AppCompatActivity implements NewsItemDeleg
               /*  Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
 
-              drawerLayout.openDrawer(GravityCompat.START);
+//                drawerLayout.openDrawer(GravityCompat.START);
+
+                Intent intent = LoginRegisterActivity.newIntent(getApplicationContext());
+                startActivity(intent);
             }
         });
 
-        RecyclerView rvNew = findViewById(R.id.rv_news);
-        rvNew.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
+        rvNews.setmEmptyView(vpEmptyNews);
+        rvNews.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        NewsAdapter newsAdapter = new NewsAdapter(getApplicationContext(), this);
+        rvNews.setAdapter(newsAdapter);
 
-        NewsAdapter newsAdapter=new NewsAdapter(getApplicationContext(),this);
-        rvNew.setAdapter(newsAdapter);
+        mSmartScrollListener = new SmartScrollListener(new SmartScrollListener.OnSmartScrollListener() {
+            @Override
+            public void onListEndReach() {
+                Snackbar.make(rvNews, "This is the all data for NOW", Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+        rvNews.addOnScrollListener(mSmartScrollListener);
 
     }
 
@@ -101,7 +127,43 @@ public class NewsListActivity extends AppCompatActivity implements NewsItemDeleg
 
     @Override
     public void onTapNews() {
-        Intent intent=NewsDetailsActivity.newIntent(getApplicationContext());
+        Intent intent = NewsDetailsActivity.newIntent(getApplicationContext());
+//        startActivity(intent);
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                // the context of the activity
+                this,
+
+                // For each shared element, add to this method a new Pair item,
+                // which contains the reference of the view we are transitioning *from*,
+                // and the value of the transitionName attribute
+                new Pair<View, String>(findViewById(R.id.iv_publication_logo),
+                        getString(R.string.transition_name_publication_image)),
+                new Pair<View, String>(findViewById(R.id.tv_publication_name),
+                        getString(R.string.transition_name_publication_name)),
+                new Pair<View, String>(findViewById(R.id.tv_published_date),
+                        getString(R.string.transition_name_posted_date)),
+                new Pair<View, String>(findViewById(R.id.iv_news_hero_image),
+                        getString(R.string.transition_name_hero_image))
+        );
+        ActivityCompat.startActivity(this, intent, options.toBundle());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onTapNewsEvent(TapNewsEvent event) {
+        Intent intent = NewsDetailsActivity.newIntent(getApplicationContext());
 //        startActivity(intent);
 
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
