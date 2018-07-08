@@ -30,7 +30,7 @@ public class NewsAdapter extends BaseRecyclerAdapter<NewsViewHolder,NewsVO> {
         return new NewsViewHolder(newsItemView,mNewsItemDelegeate);
     }
 
-    @Override
+   /* @Override
     public void onBindViewHolder(NewsViewHolder holder, int position) {
 
     }
@@ -38,5 +38,5 @@ public class NewsAdapter extends BaseRecyclerAdapter<NewsViewHolder,NewsVO> {
     @Override
     public int getItemCount() {
         return 16;
-    }
+    }*/
 }

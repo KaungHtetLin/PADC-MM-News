@@ -4,8 +4,7 @@ import android.view.View;
 
 import net.kaunghtetlin.sfc.data.vo.NewsVO;
 import net.kaunghtetlin.sfc.delegates.NewsItemDelegate;
-import net.kaunghtetlin.sfc.events.NetworkEvent;
-import net.kaunghtetlin.sfc.events.TapNewsEvent;
+import net.kaunghtetlin.sfc.events.RestApiEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -31,6 +30,6 @@ public class NewsViewHolder extends BaseViewHolder<NewsVO> {
     public void onClick(View view) {
 //        mDelegate.onTapNews();
 //        EventBus.getDefault().post(new TapNewsEvent("news-id"));
-        EventBus.getDefault().post(new NetworkEvent.Noresponse());
+        EventBus.getDefault().post(new RestApiEvent.EmptyResponseEvent());
     }
 }
